@@ -3,80 +3,222 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StockPro</title>
+    <title>StockPro - Control Total</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f4f4f9;
-            margin: 0;
-        }
-        /* Diseño de la Pantalla de Inicio */
-        .splash {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background-color: #0056b3;
-            color: white;
-        }
-        h1 {
-            font-size: 3em;
-            margin-bottom: 5px;
-        }
-        .btn {
-            background-color: #28a745;
-            color: white;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 5px;
-            font-size: 1.2em;
-            cursor: pointer;
-            margin-top: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        /* Diseño del Menú */
-        .menu {
-            display: none;
-            padding: 20px;
-        }
-        .menu-item {
-            background: white;
-            padding: 20px;
-            margin: 10px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            cursor: pointer;
-            font-size: 1.1em;
-            font-weight: bold;
-        }
+        :root { --primary: #0056b3; --success: #28a745; --bg: #f4f7f6; --dark: #333; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg); color: var(--dark); margin: 0; padding: 0; }
+        
+        /* Pantalla de Inicio (Splash) */
+        #splash { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: linear-gradient(135deg, #0056b3, #003366); color: white; text-align: center; padding: 20px; }
+        #splash h1 { font-size: 2.8em; margin-bottom: 5px; }
+        .btn-main { background-color: var(--success); color: white; padding: 15px 40px; border: none; border-radius: 30px; font-size: 1.2em; font-weight: bold; cursor: pointer; margin-top: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: 0.2s; }
+        .btn-main:active { transform: scale(0.95); }
+
+        /* Estructura General de la App */
+        .app-container { display: none; padding: 20px; max-width: 600px; margin: 0 auto; padding-bottom: 80px; }
+        header { background: var(--primary); color: white; padding: 15px; border-radius: 12px; text-align: center; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        header h2 { margin: 0; font-size: 1.5em; }
+
+        /* Menú Principal (Índice de Botones) */
+        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        .menu-card { background: white; padding: 20px; border-radius: 12px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); cursor: pointer; transition: 0.2s; border-left: 5px solid var(--primary); }
+        .menu-card:active { transform: scale(0.98); }
+        .menu-card h3 { margin: 10px 0 5px 0; font-size: 1.1em; color: var(--primary); }
+        .menu-card p { margin: 0; font-size: 0.85em; color: #666; }
+
+        /* Secciones Ocultas / Formularios y Listas */
+        .section-view { display: none; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        .form-group { margin-bottom: 15px; text-align: left; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 0.9em; }
+        .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-size: 1em; }
+        .btn-action { background: var(--primary); color: white; border: none; padding: 12px; width: 100%; border-radius: 8px; font-size: 1em; font-weight: bold; cursor: pointer; }
+        .btn-back { background: #6c757d; color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; margin-bottom: 15px; }
+
+        /* Lista de Inventario Visual */
+        .product-item { display: flex; align-items: center; background: #fafafa; border: 1px solid #eee; padding: 10px; border-radius: 8px; margin-bottom: 10px; }
+        .product-item img { width: 60px; height: 60px; object-fit: cover; border-radius: 6px; margin-right: 15px; background: #ddd; }
+        .product-info { flex-grow: 1; text-align: left; }
+        .product-info h4 { margin: 0 0 5px 0; font-size: 1em; }
+        .product-info p { margin: 2px 0; font-size: 0.8em; color: #555; }
+        .stock-badge { background: #e2f0d9; color: #385723; padding: 4px 8px; border-radius: 6px; font-weight: bold; font-size: 0.85em; }
     </style>
 </head>
 <body>
+
     <!-- Pantalla de Inicio -->
-    <div id="splash" class="splash">
+    <div id="splash">
         <h1>📦 StockPro</h1>
-        <p>Control Total de tu Mercadería</p>
-        <button class="btn" onclick="iniciarApp()">Iniciar App</button>
+        <p>Control Avanzado de Mercadería y Repuestos</p>
+        <button class="btn-main" onclick="entrarApp()">Entrar al Sistema</button>
     </div>
 
-    <!-- Menú Principal -->
-    <div id="menu" class="menu">
-        <h2>Menú Principal</h2>
-        <div class="menu-item" onclick="abrirEscaner()">📷 Nueva Venta (Escanear)</div>
-        <div class="menu-item">📦 Mi Inventario</div>
-        <div class="menu-item">➕ Ingresar Mercadería</div>
-        <div class="menu-item">📊 Ventas del Día</div>
+    <!-- Contenedor Principal de la App -->
+    <div id="app" class="app-container">
+        <header>
+            <h2>StockPro - Panel Central</h2>
+        </header>
+
+        <!-- Índice / Menú de Opciones -->
+        <div id="menu-principal" class="menu-grid">
+            <div class="menu-card" onclick="mostrarSeccion('seccion-agregar')">
+                <h3>➕ Nuevo Producto</h3>
+                <p>Cargar con foto, marca y medidas</p>
+            </div>
+            <div class="menu-card" onclick="mostrarSeccion('seccion-inventario'); cargarInventario();">
+                <h3>📦 Ver Inventario</h3>
+                <p>Stock actual y detalles</p>
+            </div>
+            <div class="menu-card" onclick="alert('Módulo de Ventas Automáticas activo en la siguiente actualización.')">
+                <h3>🛒 Registrar Venta</h3>
+                <p>Descontar stock del día</p>
+            </div>
+            <div class="menu-card" onclick="alert('Aquí verás el historial de movimientos.')">
+                <h3>📊 Movimientos</h3>
+                <p>Entradas y salidas</p>
+            </div>
+        </div>
+
+        <!-- Sección: Agregar Producto -->
+        <div id="seccion-agregar" class="section-view">
+            <button class="btn-back" onclick="volverMenu()">⬅ Volver al Menú</button>
+            <h3>Registrar Nuevo Producto</h3>
+            <div class="form-group">
+                <label>Código de Barras / ID:</label>
+                <input type="text" id="prod-id" placeholder="Escanee o escriba código">
+            </div>
+            <div class="form-group">
+                <label>Nombre del Producto:</label>
+                <input type="text" id="prod-nombre" placeholder="Ej: Amortiguador / Lavandina">
+            </div>
+            <div class="form-group">
+                <label>Marca:</label>
+                <input type="text" id="prod-marca" placeholder="Ej: Ford / MasterClean">
+            </div>
+            <div class="form-group">
+                <label>Medidas / Especificación:</label>
+                <input type="text" id="prod-medida" placeholder="Ej: 5 Litros / R14 / 50cm">
+            </div>
+            <div class="form-group">
+                <label>Categoría:</label>
+                <select id="prod-categoria">
+                    <option value="Repuestos">Repuestos</option>
+                    <option value="Limpieza">Limpieza / Mercadería</option>
+                    <option value="Accesorios">Accesorios</option>
+                    <option value="Otros">Otros</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Cantidad en Stock:</label>
+                <input type="number" id="prod-stock" placeholder="0" value="1">
+            </div>
+            <div class="form-group">
+                <label>Foto del Producto:</label>
+                <input type="file" id="prod-foto" accept="image/*">
+            </div>
+            <button class="btn-action" onclick="guardarProducto()">Guardar Producto</button>
+        </div>
+
+        <!-- Sección: Ver Inventario -->
+        <div id="seccion-inventario" class="section-view">
+            <button class="btn-back" onclick="volverMenu()">⬅ Volver al Menú</button>
+            <h3>Inventario Actual</h3>
+            <div id="lista-productos">
+                <!-- Los productos se cargarán aquí automáticamente -->
+            </div>
+        </div>
+
     </div>
 
     <script>
-        function iniciarApp() {
+        function entrarApp() {
             document.getElementById('splash').style.display = 'none';
-            document.getElementById('menu').style.display = 'block';
+            document.getElementById('app').style.display = 'block';
         }
-        function abrirEscaner() {
-            alert("Aquí conectaremos el lector de código de barras usando la cámara en el próximo paso.");
+
+        function mostrarSeccion(idSeccion) {
+            document.getElementById('menu-principal').style.display = 'none';
+            document.querySelectorAll('.section-view').forEach(el => el.style.display = 'none');
+            document.getElementById(idSeccion).style.display = 'block';
+        }
+
+        function volverMenu() {
+            document.querySelectorAll('.section-view').forEach(el => el.style.display = 'none');
+            document.getElementById('menu-principal').style.display = 'grid';
+        }
+
+        // Sistema para guardar productos en la memoria del celular
+        function guardarProducto() {
+            const id = document.getElementById('prod-id').value;
+            const nombre = document.getElementById('prod-nombre').value;
+            const marca = document.getElementById('prod-marca').value;
+            const medida = document.getElementById('prod-medida').value;
+            const categoria = document.getElementById('prod-categoria').value;
+            const stock = document.getElementById('prod-stock').value;
+            const fotoInput = document.getElementById('prod-foto');
+
+            if(!nombre || !id) {
+                alert("Por favor completa al menos el Código y el Nombre del producto.");
+                return;
+            }
+
+            let reader = new FileReader();
+            if (fotoInput.files && fotoInput.files[0]) {
+                reader.readAsDataURL(fotoInput.files[0]);
+            }
+
+            reader.onload = function (e) {
+                const fotoData = fotoInput.files.length > 0 ? e.target.result : 'https://via.placeholder.com/60?text=Sin+Foto';
+                
+                let producto = { id, nombre, marca, medida, categoria, stock, foto: fotoData };
+                
+                let inventario = JSON.parse(localStorage.getItem('stockpro_inventario')) || [];
+                inventario.push(producto);
+                localStorage.setItem('stockpro_inventario', JSON.stringify(inventario));
+
+                alert("¡Producto guardado con éxito!");
+                document.getElementById('prod-id').value = '';
+                document.getElementById('prod-nombre').value = '';
+                document.getElementById('prod-marca').value = '';
+                document.getElementById('prod-medida').value = '';
+                document.getElementById('prod-stock').value = '1';
+                document.getElementById('prod-foto').value = '';
+                volverMenu();
+            };
+
+            if (fotoInput.files.length === 0) {
+                let producto = { id, nombre, marca, medida, categoria, stock, foto: 'https://via.placeholder.com/60?text=Sin+Foto' };
+                let inventario = JSON.parse(localStorage.getItem('stockpro_inventario')) || [];
+                inventario.push(producto);
+                localStorage.setItem('stockpro_inventario', JSON.stringify(inventario));
+                alert("¡Producto guardado con éxito!");
+                volverMenu();
+            }
+        }
+
+        function cargarInventario() {
+            const contenedor = document.getElementById('lista-productos');
+            let inventario = JSON.parse(localStorage.getItem('stockpro_inventario')) || [];
+            
+            if(inventario.length === 0) {
+                contenedor.innerHTML = '<p style="color:#777; text-align:center;">No hay productos cargados todavía.</p>';
+                return;
+            }
+
+            let html = '';
+            inventario.forEach(item => {
+                html += `
+                    <div class="product-item">
+                        <img src="${item.foto}" alt="Foto">
+                        <div class="product-info">
+                            <h4>${item.nombre} (${item.marca})</h4>
+                            <p><b>Medida/Spec:</b> ${item.medida || 'N/D'} | <b>Cat:</b> ${item.categoria}</p>
+                            <p><b>ID:</b> ${item.id}</p>
+                        </div>
+                        <div class="stock-badge">Stock: ${item.stock}</div>
+                    </div>
+                `;
+            });
+            contenedor.innerHTML = html;
         }
     </script>
 </body>
