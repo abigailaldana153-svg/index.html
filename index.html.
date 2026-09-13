@@ -5,18 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StockPro</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; background-color: #f4f4f9; margin: 0; }
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f9;
+            margin: 0;
+        }
         /* Diseño de la Pantalla de Inicio */
-        .splash { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background-color: #0056b3; color: white; }
-        h1 { font-size: 3em; margin-bottom: 5px; }
-        .btn { background-color: #28a745; color: white; padding: 15px 30px; border: none; border-radius: 5px; font-size: 1.2em; cursor: pointer; margin-top: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .splash {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #0056b3;
+            color: white;
+        }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 5px;
+        }
+        .btn {
+            background-color: #28a745;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
         /* Diseño del Menú */
-        .menu { display: none; padding: 20px; }
-        .menu-item { background: white; padding: 20px; margin: 10px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); cursor: pointer; font-size: 1.1em; font-weight: bold; }
+        .menu {
+            display: none;
+            padding: 20px;
+        }
+        .menu-item {
+            background: white;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
-
     <!-- Pantalla de Inicio -->
     <div id="splash" class="splash">
         <h1>📦 StockPro</h1>
@@ -24,7 +61,7 @@
         <button class="btn" onclick="iniciarApp()">Iniciar App</button>
     </div>
 
-    <!-- Menú Principal (Índice) -->
+    <!-- Menú Principal -->
     <div id="menu" class="menu">
         <h2>Menú Principal</h2>
         <div class="menu-item" onclick="abrirEscaner()">📷 Nueva Venta (Escanear)</div>
@@ -34,13 +71,10 @@
     </div>
 
     <script>
-        // Función para ocultar el inicio y mostrar el menú
         function iniciarApp() {
             document.getElementById('splash').style.display = 'none';
             document.getElementById('menu').style.display = 'block';
         }
-
-        // Función temporal para el botón de escanear
         function abrirEscaner() {
             alert("Aquí conectaremos el lector de código de barras usando la cámara en el próximo paso.");
         }
